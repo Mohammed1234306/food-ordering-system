@@ -363,7 +363,7 @@ export default function AdminMenuPage() {
                   {/* Category */}
                   <div>
                     <label className="block text-white/70 text-sm font-medium mb-1.5">Category *</label>
-                    <select value={formData.category_id}
+                    <select value={formData.category_id || ""}
                       onChange={e => setFormData(p => ({ ...p, category_id: e.target.value }))}
                       className="w-full bg-white/10 border border-white/20 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
                       <option value="">Select category...</option>
