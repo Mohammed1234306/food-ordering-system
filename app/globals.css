@@ -1,0 +1,397 @@
+/* ============================================================
+   GLOBAL CSS - DESIGN TOKENS & BASE STYLES
+   ============================================================
+   This file:
+   1. Imports Tailwind CSS layers
+   2. Defines CSS custom properties (design tokens)
+   3. Sets base/reset styles
+   4. Defines reusable utility classes
+   
+   HOW TO CHANGE THE THEME COLOR:
+   Find the --primary variables below and replace the HSL values.
+   Use https://www.color-space.com/hex-to-hsl/ to convert hex → HSL
+   ============================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   These are used by shadcn/ui and our custom components
+   ============================================================ */
+@layer base {
+  :root {
+    /* !! CHANGE THESE to customize your color scheme !!
+       Format: hue saturation% lightness%
+       Example: --primary: 25 95% 53%;
+       = HSL(25, 95%, 53%) = warm orange */
+    
+    /* Background */
+    --background: 35 60% 98%;        /* Warm off-white page background */
+    --foreground: 25 60% 8%;         /* Near-black text */
+    
+    /* Card/surface */
+    --card: 0 0% 100%;               /* Pure white cards */
+    --card-foreground: 25 60% 8%;
+    
+    /* Popover/dropdown */
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 60% 8%;
+    
+    /* Primary brand color - warm orange
+       !! CHANGE THIS to your brand color !! */
+    --primary: 25 93% 53%;           /* #f77f17 - main brand orange */
+    --primary-foreground: 0 0% 100%; /* White text on primary bg */
+    
+    /* Secondary - warm beige */
+    --secondary: 35 40% 92%;
+    --secondary-foreground: 25 30% 25%;
+    
+    /* Muted - for placeholder text, disabled states */
+    --muted: 35 20% 92%;
+    --muted-foreground: 25 15% 45%;
+    
+    /* Accent - slightly different from secondary */
+    --accent: 35 40% 90%;
+    --accent-foreground: 25 40% 20%;
+    
+    /* Destructive - for errors, cancel buttons */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Borders and inputs */
+    --border: 35 20% 88%;
+    --input: 35 20% 88%;
+    --ring: 25 93% 53%;              /* Focus ring - same as primary */
+    
+    /* Border radius - controls how rounded UI elements are
+       !! CHANGE THIS for more/less rounded UI !!
+       0.5rem = subtle rounding, 1rem = very rounded */
+    --radius: 0.625rem;
+    
+    /* Chart colors (used in admin analytics) */
+    --chart-1: 25 93% 53%;
+    --chart-2: 142 76% 36%;
+    --chart-3: 217 91% 60%;
+    --chart-4: 262 83% 58%;
+    --chart-5: 350 89% 60%;
+  }
+
+  /* Dark mode color tokens
+     Note: Dark mode isn't fully implemented but tokens are ready
+     if you want to add it later */
+  .dark {
+    --background: 25 20% 7%;
+    --foreground: 35 30% 95%;
+    --card: 25 20% 10%;
+    --card-foreground: 35 30% 95%;
+    --popover: 25 20% 10%;
+    --popover-foreground: 35 30% 95%;
+    --primary: 25 93% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 25 15% 18%;
+    --secondary-foreground: 35 30% 80%;
+    --muted: 25 15% 18%;
+    --muted-foreground: 35 15% 55%;
+    --accent: 25 15% 20%;
+    --accent-foreground: 35 30% 80%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 25 15% 20%;
+    --input: 25 15% 20%;
+    --ring: 25 93% 53%;
+  }
+}
+
+/* ============================================================
+   BASE / RESET STYLES
+   ============================================================ */
+@layer base {
+  /* Apply border-box sizing to everything */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  /* Set base border color */
+  * {
+    @apply border-border;
+  }
+
+  /* Base body styles */
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Typography scale */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary-500;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Remove default list styles */
+  ul, ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Make images responsive by default */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ============================================================
+   COMPONENT UTILITIES
+   Reusable class combinations for common UI patterns
+   ============================================================ */
+@layer components {
+
+  /* ---- BUTTONS ---- */
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white 
+           font-semibold px-6 py-3 rounded-xl 
+           transition-all duration-200 
+           hover:shadow-warm hover:-translate-y-0.5
+           active:translate-y-0 active:shadow-none
+           disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none;
+  }
+
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-50 text-foreground 
+           border border-border font-semibold px-6 py-3 rounded-xl 
+           transition-all duration-200 
+           hover:shadow-card hover:-translate-y-0.5;
+  }
+
+  .btn-ghost {
+    @apply hover:bg-secondary text-foreground font-medium px-4 py-2 rounded-lg 
+           transition-colors duration-150;
+  }
+
+  /* ---- CARDS ---- */
+  .card-base {
+    @apply bg-white rounded-2xl shadow-card border border-border/50 
+           overflow-hidden;
+  }
+
+  .card-hover {
+    @apply card-base hover:shadow-card-hover hover:-translate-y-1 
+           transition-all duration-300 cursor-pointer;
+  }
+
+  /* ---- INPUTS ---- */
+  .input-base {
+    @apply w-full px-4 py-3 rounded-xl border border-border 
+           bg-white text-foreground placeholder:text-muted-foreground
+           focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+           transition-colors duration-150;
+  }
+
+  /* ---- BADGES / TAGS ---- */
+  .tag {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full 
+           text-xs font-medium;
+  }
+
+  .tag-vegetarian {
+    @apply tag bg-green-100 text-green-700;
+  }
+
+  .tag-vegan {
+    @apply tag bg-emerald-100 text-emerald-700;
+  }
+
+  .tag-spicy {
+    @apply tag bg-red-100 text-red-700;
+  }
+
+  .tag-popular {
+    @apply tag bg-amber-100 text-amber-700;
+  }
+
+  .tag-new {
+    @apply tag bg-blue-100 text-blue-700;
+  }
+
+  .tag-gluten-free {
+    @apply tag bg-yellow-100 text-yellow-700;
+  }
+
+  .tag-premium {
+    @apply tag bg-purple-100 text-purple-700;
+  }
+
+  .tag-healthy {
+    @apply tag bg-teal-100 text-teal-700;
+  }
+
+  /* ---- SECTION LAYOUT ---- */
+  .section-padding {
+    @apply px-4 md:px-6 lg:px-8;
+  }
+
+  .container-max {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* ---- PAGE HEADER ---- */
+  .page-header {
+    @apply pt-24 pb-8 px-4 md:px-6 lg:px-8;
+  }
+
+  /* ---- SKELETON LOADING ---- */
+  .skeleton {
+    @apply animate-pulse bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 
+           bg-[length:200%_100%] rounded-lg;
+  }
+
+  /* ---- SCROLLBAR STYLING ---- */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.primary.200') transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: theme('colors.primary.200');
+    border-radius: 2px;
+  }
+}
+
+/* ============================================================
+   UTILITIES
+   One-off utility classes
+   ============================================================ */
+@layer utilities {
+
+  /* Text gradient using brand colors */
+  .text-gradient {
+    background: linear-gradient(135deg, theme('colors.primary.600'), theme('colors.primary.400'));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Warm gradient background for hero sections */
+  .bg-warm-gradient {
+    background: linear-gradient(
+      135deg,
+      theme('colors.primary.50') 0%,
+      theme('colors.background.DEFAULT') 50%,
+      theme('colors.primary.50') 100%
+    );
+  }
+
+  /* Noise texture overlay for depth effect */
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20;
+  }
+
+  /* Orange dot pattern background */
+  .bg-dots {
+    background-image: radial-gradient(
+      circle, 
+      theme('colors.primary.200') 1px, 
+      transparent 1px
+    );
+    background-size: 24px 24px;
+  }
+
+  /* Hide scrollbar but keep scrollable */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Text balance for headings */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Aspect ratio for food images */
+  .aspect-food {
+    aspect-ratio: 4/3;
+  }
+}
+
+/* ============================================================
+   LEAFLET MAP OVERRIDES
+   Required to make the map picker look good in our UI
+   ============================================================ */
+.leaflet-container {
+  border-radius: 1rem;
+  z-index: 0;
+}
+
+.leaflet-control-attribution {
+  font-size: 10px !important;
+  opacity: 0.6;
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR FOR ADMIN SIDEBAR
+   ============================================================ */
+.admin-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.admin-sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+/* ============================================================
+   FRAMER MOTION - prevent layout shift during animations
+   ============================================================ */
+[data-framer-component-type] {
+  position: relative;
+}
+
+/* ============================================================
+   PRINT STYLES - for order receipts
+   ============================================================ */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+}
