@@ -37,7 +37,7 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: any[]) {
           // Set cookies on both the request and response
           // This is required for the middleware to work correctly
           cookiesToSet.forEach(({ name, value }) => 
