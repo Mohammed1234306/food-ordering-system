@@ -166,7 +166,7 @@ export function Navbar() {
                     ) : (
                       <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center">
                         <span className="text-primary-700 text-xs font-bold">
-                          {getInitials(profile?.full_name || user.email)}
+                          {getInitials(profile?.full_name || user.email || "")}
                         </span>
                       </div>
                     )}
